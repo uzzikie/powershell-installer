@@ -47,7 +47,7 @@ if ($task -ne $null) {
 else {
     # Install scheduled task 
     $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File `"$taskScript`""
-    $trigger = New-ScheduledTaskTrigger -Daily -At 5am
+    $trigger = New-ScheduledTaskTrigger -Daily -At 12am
 
     # Register the scheduled task
     Register-ScheduledTask -TaskName $taskName -Trigger $trigger -Action $action -RunLevel Highest -User "SYSTEM"
