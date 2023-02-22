@@ -47,8 +47,8 @@ $jsonFile = "C:\SystemInformation.json"
 $systeminfo | ConvertTo-Json | Out-File -FilePath $jsonFile
 
 $url = "https://ansible.uzzikie.com/upload.php"
-$fileContent = Get-Content $jsonFile
 
+$fileContent = Get-Content $jsonFile
 $username = "ansible"
 $password = "16ef4c840068267820ccdce99c9b05b6079ca413b9e1d7982b15684034467729"
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
@@ -58,10 +58,6 @@ $headers = @{
     Authorization = 'Basic ' + [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credential.GetNetworkCredential().Username + ':' + $credential.GetNetworkCredential().Password))
 }
 
-$requestBody = @{
-    file = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($fileContent))
-}
-
-Invoke-RestMethod -Method POST -Uri $url -Headers $headers -ContentType "application/json" -Body (ConvertTo-Json $requestBody)
+Invoke-RestMethod -Method POST -Uri $url -Headers $headers -ContentType "application/json" -Body $fileContent
 
 
