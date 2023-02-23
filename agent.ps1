@@ -17,6 +17,9 @@ $systeminfo.TotalPhysicalMemory = "$TotalRAM"
 #Collect CPU Information
 $systeminfo.Processor = (Get-WmiObject -Class Win32_Processor).Name
 
+#Collect OSArchitecture
+$systeminfo.Architecture = $Env:PROCESSOR_ARCHITECTURE
+
 #Collect Disk Information
 $systeminfo.Disks = (Get-WmiObject -Class Win32_LogicalDisk | Select-Object DeviceID, Size, FreeSpace, VolumeName)
 
