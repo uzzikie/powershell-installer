@@ -34,6 +34,8 @@ $systeminfo.Programs = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Win
 $pleskfile = $env:plesk_dir + "version";
 if (Test-Path $pleskfile -PathType Leaf ) {
     $systeminfo.Plesk = & cat "$pleskfile" | Out-String -Stream | ForEach-Object { $_.Trim() }    
+} else {
+    $systeminfo.Plesk = '';
 }
 
 
