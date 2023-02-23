@@ -26,11 +26,13 @@ $systeminfo.Programs = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Win
                       Select-Object DisplayName, DisplayVersion, Publisher, InstallDate |
                       Sort-Object DisplayName
 
+
 #Collect Plesk Info
 $pleskfile = $env:plesk_dir + "version";
 if (Test-Path $pleskfile -PathType Leaf ) {
     $systeminfo.Plesk = & cat "$pleskfile" | Out-String -Stream | ForEach-Object { $_.Trim() }    
 }
+
 
 # Get a list of all users in the server
 $systeminfo.Users = Get-LocalUser | Select-Object Name, Description, Enabled, LastLogon, ObjectClass
@@ -61,10 +63,4 @@ $headers = @{
     Authorization = 'Basic ' + [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credential.GetNetworkCredential().Username + ':' + $credential.GetNetworkCredential().Password))
 }
 
-$requestBody = @{
-    file = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($fileContent))
-}
-
-Invoke-RestMethod -Method POST -Uri $url -Headers $headers -ContentType "application/json" -Body (ConvertTo-Json $requestBody)
-
-
+Invoke-RestMethod -Method POST -Uri $url -Headers $headers -ContentType "application/json" -Body $fileContent
