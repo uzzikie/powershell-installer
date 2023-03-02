@@ -56,7 +56,7 @@ $systeminfo.Timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $jsonFile = "C:\SystemInformation.json"
 $systeminfo | ConvertTo-Json | Out-File -FilePath $jsonFile
 
-$url = "https://ansible.uzzikie.com/upload.php"
+$url = "https://systemditor.com/upload.php"
 $fileContent = Get-Content $jsonFile
 
 $username = "ansible"

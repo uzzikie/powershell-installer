@@ -17,4 +17,12 @@ else {
     Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -User "SYSTEM" -RunLevel Highest  
 }
 
-
+# Install PSWindowsUpdate module
+if (Get-Module -Name PSWindowsUpdate -ListAvailable) {
+    Write-Host "Module already installed."
+}
+else {
+    # If the module is not already installed, install it using the Install-Module cmdlet
+    Install-Module -Name PSWindowsUpdate -Scope CurrentUser -Force
+    Write-Host "Module installed successfully."
+}
