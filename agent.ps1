@@ -32,8 +32,10 @@ $systeminfo.Programs = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Win
 #Collect Windows Updates available
 $UpdateSession = New-Object -ComObject Microsoft.Update.Session
 $UpdateSearcher = $UpdateSession.CreateupdateSearcher()
-$systeminfo.Updates = @($UpdateSearcher.Search("IsHidden=0 and IsInstalled=0").Updates)
-$systeminfo.Updates | Select-Object Title,MsrcSeverity
+$UpdateResults = @($UpdateSearcher.Search("IsHidden=0 and IsInstalled=0").Updates)
+if ($UpdateResults.Count -gt 0) {
+    $systeminfo.WindowUpdates = $UpdateResults | Select-Object Title,MsrcSeverity
+}
 
 
 #Collect Plesk Info
