@@ -4,6 +4,10 @@ $systeminfo = @{}
 #Collect Computer Name
 $systeminfo.Computername = (Get-WmiObject -Class Win32_ComputerSystem).Name
 
+#Virtual or Physical
+$systeminfo.Manufacturer = (Get-WmiObject -Class Win32_ComputerSystem).Manufacturer
+$systeminfo.Model = (Get-WmiObject -Class Win32_ComputerSystem).Model
+
 #Collect Operating System
 $systeminfo.OperatingSystem = (Get-WmiObject -Class Win32_OperatingSystem).Caption
 
@@ -15,7 +19,14 @@ $UsedRAM = $TotalRAM - $FreeRAM
 $systeminfo.TotalPhysicalMemory = "$TotalRAM"
 
 #Collect CPU Information
-$systeminfo.Processor = (Get-WmiObject -Class Win32_Processor).Name
+$processor = Get-ComputerInfo -Property CsProcessors
+$systeminfo.ProcessorInfo = $processor.CsProcessors
+
+#Logical Processors are with hyperthreading
+$cs = Get-WmiObject -class Win32_ComputerSystem
+$systeminfo.ProcessorCount = $cs.numberofprocessors
+
+
 
 #Collect OSArchitecture
 $systeminfo.Architecture = $Env:PROCESSOR_ARCHITECTURE
@@ -26,7 +37,7 @@ $systeminfo.Disks = (Get-WmiObject -Class Win32_LogicalDisk | Select-Object Devi
 #Collect all Installed Programs
 $systeminfo.Programs = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*,
                       HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object {$_.DisplayName -ne $null} |
-                      Select-Object DisplayName, DisplayVersion, Publisher, InstallDate |
+                      Select-Object DisplayName, DisplayVersion, Publisher, InstallDate, EstimatedSize |
                       Sort-Object DisplayName
 
 #Collect Windows Updates available
