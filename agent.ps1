@@ -59,7 +59,7 @@ if (Test-Path $pleskfile -PathType Leaf ) {
 
 
 # Get a list of all users in the server
-$systeminfo.Users = Get-LocalUser | Select-Object Name, Description, Enabled, LastLogon, ObjectClass
+#$systeminfo.Users = Get-LocalUser | Select-Object Name, Description, Enabled, LastLogon, ObjectClass
 
 # Get IP Addresses
 $systeminfo.IpAddresses = Get-NetIPAddress | Where-Object {$_.AddressFamily -eq "IPv4" -and $_.InterfaceAlias -ne "Loopback Pseudo-Interface 1"} | Select-Object IPAddress
