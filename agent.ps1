@@ -19,8 +19,8 @@ $UsedRAM = $TotalRAM - $FreeRAM
 $systeminfo.TotalPhysicalMemory = "$TotalRAM"
 
 #Collect CPU Information
-$processor = Get-ComputerInfo -Property CsProcessors
-$systeminfo.ProcessorInfo = $processor.CsProcessors
+$systeminfo.ProcessorInfo = (Get-WmiObject -Class Win32_Processor -ComputerName. | Select-Object Name)
+
 
 #Logical Processors are with hyperthreading
 $cs = Get-WmiObject -class Win32_ComputerSystem
