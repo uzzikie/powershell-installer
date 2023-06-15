@@ -45,8 +45,10 @@ $UpdateSession = New-Object -ComObject Microsoft.Update.Session
 $UpdateSearcher = $UpdateSession.CreateupdateSearcher()
 $UpdateResults = @($UpdateSearcher.Search("IsHidden=0 and IsInstalled=0").Updates)
 if ($UpdateResults.Count -gt 0) {
-    $UpdateStr = $UpdateResults | Select-Object Title,MsrcSeverity
-    $UpdateStr -replace "\n", ''
+    $UpdateStr = $UpdateResults | Select-Object Title,MsrcSeverity | ForEach-Object {
+        $_.Title = $_.Title -replace "\n|`r|`n" , "" # replace string in a property
+        $_                                           # output the object back onto the pipeline
+    }
     $systeminfo.WindowUpdates = $UpdateStr
 }
 
