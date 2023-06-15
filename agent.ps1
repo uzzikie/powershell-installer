@@ -45,9 +45,10 @@ $UpdateSession = New-Object -ComObject Microsoft.Update.Session
 $UpdateSearcher = $UpdateSession.CreateupdateSearcher()
 $UpdateResults = @($UpdateSearcher.Search("IsHidden=0 and IsInstalled=0").Updates)
 if ($UpdateResults.Count -gt 0) {
-    $systeminfo.WindowUpdates = $UpdateResults | Select-Object Title,MsrcSeverity
+    $UpdateStr = $UpdateResults | Select-Object Title,MsrcSeverity
+    $UpdateStr -replace "\n", ''
+    $systeminfo.WindowUpdates = $UpdateStr
 }
-
 
 #Collect Plesk Info
 $pleskfile = $env:plesk_dir + "version";
