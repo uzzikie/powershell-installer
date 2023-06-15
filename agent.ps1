@@ -40,7 +40,7 @@ $systeminfo.Programs = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Win
                       Select-Object DisplayName, DisplayVersion, Publisher, InstallDate, EstimatedSize |
                       Sort-Object DisplayName
 
-<#
+
 #Collect Windows Updates available
 $UpdateSession = New-Object -ComObject Microsoft.Update.Session
 $UpdateSearcher = $UpdateSession.CreateupdateSearcher()
@@ -52,7 +52,7 @@ if ($UpdateResults.Count -gt 0) {
     }
     $systeminfo.WindowUpdates = $UpdateStr
 }
-#>
+
 
 #Collect Plesk Info
 $pleskfile = $env:plesk_dir + "version";
