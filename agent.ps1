@@ -1,3 +1,5 @@
+Start-sleep -Seconds (1..14400 | get-random)
+
 #Create a hash table to store system information
 $systeminfo = @{}
 
