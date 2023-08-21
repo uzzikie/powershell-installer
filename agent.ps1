@@ -3,6 +3,9 @@ Start-sleep -Seconds (1..14400 | get-random)
 #Create a hash table to store system information
 $systeminfo = @{}
 
+#Collect UUID
+$systeminfo.Server = Get-WmiObject -Class "Win32_ComputerSystemProduct" | Select-Object -Property UUID 
+
 #Collect Computer Name
 $systeminfo.Computername = (Get-WmiObject -Class Win32_ComputerSystem).Name
 
